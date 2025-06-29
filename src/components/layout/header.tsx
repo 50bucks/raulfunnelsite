@@ -6,7 +6,7 @@ export default function Header() {
       <div className="container mx-auto">
         <div className="flex items-center gap-2">
           <Target className="h-6 w-6 text-accent" />
-          <span className="text-xl font-semibold text-foreground">Raul Funnel Site</span>
+          <span className="text-xl font-semibold text-foreground">Raúl Rodrigues Media Buyer</span>
         </div>
       </div>
     </header>
