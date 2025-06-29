@@ -32,11 +32,19 @@ const challengeOptions = {
   },
 };
 
-const totalSteps = 5;
+const budgetOptions: { [key: string]: { label: string } } = {
+  '<1500': { label: 'Under $1,500 / month' },
+  '1500-5000': { label: '$1,500 - $5,000 / month' },
+  '5000-10000': { label: '$5,000 - $10,000 / month' },
+  '>10000': { label: 'Over $10,000 / month' },
+};
+
+const totalSteps = 6;
 
 const stepFields: FieldNames<FunnelFormValues>[][] = [
   ['name', 'email', 'companyName'],
   ['challenge'],
+  ['monthlyBudget'],
   ['businessDescription'],
   ['marketingEfforts'],
   ['marketingGoals'],
@@ -115,6 +123,11 @@ export function FunnelForm({ onSubmit, isLoading }: FunnelFormProps) {
             <CarouselItem>
               <div className="space-y-4 p-1">
                 <FormField name="challenge" control={form.control} render={({ field }) => ( <FormItem className="space-y-3"> <FormLabel>What's your biggest marketing challenge?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">{Object.entries(challengeOptions).map(([key, { label }]) => (<FormItem key={key} className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-secondary/50 transition-colors"><FormControl><RadioGroupItem value={key as keyof typeof challengeOptions} /></FormControl><FormLabel className="font-normal">{label}</FormLabel></FormItem>))}</RadioGroup></FormControl><FormMessage /></FormItem> )} />
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="space-y-4 p-1">
+                <FormField name="monthlyBudget" control={form.control} render={({ field }) => ( <FormItem className="space-y-3"> <FormLabel>What's your current monthly advertising budget?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">{Object.entries(budgetOptions).map(([key, { label }]) => (<FormItem key={key} className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-secondary/50 transition-colors"><FormControl><RadioGroupItem value={key} /></FormControl><FormLabel className="font-normal">{label}</FormLabel></FormItem>))}</RadioGroup></FormControl><FormMessage /></FormItem> )} />
               </div>
             </CarouselItem>
             <CarouselItem>

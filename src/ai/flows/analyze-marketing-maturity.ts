@@ -21,6 +21,7 @@ const AnalyzeMarketingMaturityInputSchema = z.object({
     .string()
     .describe('A comprehensive overview of current marketing efforts and strategies.'),
   marketingGoals: z.string().describe('Specific, measurable marketing goals and objectives.'),
+  monthlyBudget: z.string().describe("The prospective client's stated monthly advertising budget."),
 });
 export type AnalyzeMarketingMaturityInput = z.infer<typeof AnalyzeMarketingMaturityInputSchema>;
 
@@ -58,6 +59,7 @@ You will analyze the provided information about the business, its marketing effo
 Business Description: {{{businessDescription}}}
 Marketing Efforts: {{{marketingEfforts}}}
 Marketing Goals: {{{marketingGoals}}}
+Monthly Budget: {{{monthlyBudget}}}
 
 Based on this information, assess the marketing maturity level and provide specific, actionable solutions to improve their marketing funnel and achieve their goals. Also suggest specific marketing tactics and platform prioritization.
 

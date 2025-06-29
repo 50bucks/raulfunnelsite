@@ -7,6 +7,9 @@ export const funnelFormSchema = z.object({
   challenge: z.enum(['lead-generation', 'brand-awareness', 'sales-conversion', 'other'], {
     required_error: 'You need to select your primary challenge.',
   }),
+  monthlyBudget: z.enum(['<1500', '1500-5000', '5000-10000', '>10000'], {
+    required_error: 'You need to select a budget range.',
+  }),
   businessDescription: z.string().min(20, { message: 'Please describe your business in at least 20 characters.' }),
   marketingEfforts: z.string().min(20, { message: 'Please describe your marketing efforts in at least 20 characters.' }),
   marketingGoals: z.string().min(10, { message: 'Please describe your marketing goals in at least 10 characters.' }),
