@@ -46,42 +46,48 @@ export async function submitFunnelForm(data: FunnelFormValues) {
     };
 
     // Send email using EmailJS REST API
-    const emailjsData = {
-      service_id: process.env.EMAILJS_SERVICE_ID,
-      template_id: process.env.EMAILJS_TEMPLATE_ID,
-      user_id: process.env.EMAILJS_PUBLIC_KEY,
-      accessToken: process.env.EMAILJS_PRIVATE_KEY,
-      template_params: {
-        name: parsedData.data.name,
-        email: parsedData.data.email,
-        company_name: parsedData.data.companyName,
-        challenge: parsedData.data.challenge,
-        monthly_budget: parsedData.data.monthlyBudget,
-        business_description: parsedData.data.businessDescription,
-        marketing_efforts: parsedData.data.marketingEfforts,
-        marketing_goals: parsedData.data.marketingGoals,
-        maturity_level: finalResult.maturityLevel,
-        suggested_solutions: finalResult.suggestedSolutions,
-        suggested_tactics: finalResult.suggestedTactics,
-      },
-    };
-    
-    // Fire and forget the email sending so it doesn't block the user response
-    fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(emailjsData),
-    }).then(response => {
-        if (response.ok) {
-            console.log('Email sent successfully via EmailJS');
-        } else {
-            response.text().then(text => {
-                console.error('Failed to send email via EmailJS:', text);
-            });
-        }
-    }).catch(error => {
-        console.error('Error sending email via EmailJS:', error);
-    });
+    const { EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY, EMAILJS_PRIVATE_KEY } = process.env;
+
+    if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY && EMAILJS_PRIVATE_KEY) {
+      const emailjsData = {
+        service_id: EMAILJS_SERVICE_ID,
+        template_id: EMAILJS_TEMPLATE_ID,
+        user_id: EMAILJS_PUBLIC_KEY,
+        accessToken: EMAILJS_PRIVATE_KEY,
+        template_params: {
+          name: parsedData.data.name,
+          email: parsedData.data.email,
+          company_name: parsedData.data.companyName,
+          challenge: parsedData.data.challenge,
+          monthly_budget: parsedData.data.monthlyBudget,
+          business_description: parsedData.data.businessDescription,
+          marketing_efforts: parsedData.data.marketingEfforts,
+          marketing_goals: parsedData.data.marketingGoals,
+          maturity_level: finalResult.maturityLevel,
+          suggested_solutions: finalResult.suggestedSolutions,
+          suggested_tactics: finalResult.suggestedTactics,
+        },
+      };
+      
+      // Fire and forget the email sending so it doesn't block the user response
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(emailjsData),
+      }).then(response => {
+          if (response.ok) {
+              console.log('Email sent successfully via EmailJS');
+          } else {
+              response.text().then(text => {
+                  console.error('Failed to send email via EmailJS:', text);
+              });
+          }
+      }).catch(error => {
+          console.error('Error sending email via EmailJS:', error);
+      });
+    } else {
+        console.error('EmailJS environment variables are not fully configured. Email not sent.');
+    }
 
     return { success: true, data: finalResult };
   } catch (error) {
