@@ -19,8 +19,8 @@ export async function submitFunnelForm(data: FunnelFormValues) {
       success: true,
       data: {
         maturityLevel: 'Basic Analysis',
-        suggestedSolutions: 'To achieve your marketing goals and see a significant return on investment, we recommend increasing your monthly ad spend to $1,500 or more. Higher budgets allow for more aggressive testing, campaign scaling, and access to advanced strategies that can significantly lower your acquisition costs.',
-        suggestedTactics: 'Our AI-powered tactical recommendations are reserved for clients who meet the minimum budget requirement. This ensures we can provide actionable strategies with a high probability of success.',
+        suggestedSolutions: 'To unlock advanced strategies and maximize your return on investment, a larger budget is recommended. This allows for comprehensive campaign testing and scaling. Contact Raul to get your results.',
+        suggestedTactics: 'Personalized tactical recommendations are available for partners ready to invest in significant growth. Contact Raul to get your results.',
       }
     };
   }
