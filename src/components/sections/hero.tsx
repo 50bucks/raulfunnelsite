@@ -23,8 +23,14 @@ export default function Hero() {
     
     if (result.success) {
       setAnalysis(result.data!);
+      if (result.contactWillBeMade) {
+        toast({
+          title: 'Analysis Complete!',
+          description: 'Raul will contact you soon.',
+        });
+      }
     } else {
-      const errorMessage = typeof result.error === 'string' ? result.error : 'There was an issue with your submission. Please check your inputs and try again.';
+      const errorMessage = result.error || 'There was an issue with your submission. Please check your inputs and try again.';
       setError(errorMessage);
       toast({
         title: 'Error',
