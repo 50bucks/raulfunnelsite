@@ -63,6 +63,16 @@ export function FunnelForm({ onSubmit, isLoading }: FunnelFormProps) {
   const form = useForm<FunnelFormValues>({
     resolver: zodResolver(funnelFormSchema),
     mode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+      companyName: '',
+      businessDescription: '',
+      marketingEfforts: '',
+      marketingGoals: '',
+      challenge: undefined,
+      monthlyBudget: undefined,
+    },
   });
 
   const { trigger, watch } = form;
