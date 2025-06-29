@@ -4,28 +4,28 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Ana García",
-    title: "Directora de Marketing, Soluciones Digitales",
-    avatar: "AG",
+    name: "Anne Smith",
+    title: "Marketing Director, Tech Solutions",
+    avatar: "AS",
     image: "https://placehold.co/100x100.png",
     dataAiHint: "woman portrait professional",
-    quote: "Gracias a Raúl, mejoramos nuestra adquisición de clientes a un coste bajo y de alta calidad. ¡Nuestros leads nunca habían sido tan rentables!"
+    quote: "Thanks to Raul's paid advertising services, I improved my customer acquisition method, getting high-quality clients at a low cost."
   },
   {
-    name: "Carlos Pérez",
+    name: "Charles Peterson",
     title: "CEO, InnovaTech",
     avatar: "CP",
     image: "https://placehold.co/100x100.png",
     dataAiHint: "man portrait professional",
-    quote: "Estábamos perdidos con nuestras campañas. Raúl no solo optimizó el presupuesto, sino que nos brindó una transparencia que ninguna agencia nos había dado."
+    quote: "We were lost with our campaigns. Raul not only optimized our budget but also provided a level of transparency no other agency had ever given us."
   },
   {
-    name: "Sofía Martínez",
-    title: "Fundadora, E-commerce Creativo",
+    name: "Sophia Miller",
+    title: "Founder, Creative Commerce",
     avatar: "SM",
     image: "https://placehold.co/100x100.png",
     dataAiHint: "woman portrait creative",
-    quote: "Pasamos de leads esporádicos a un flujo constante de clientes listos para comprar. La experiencia de Raúl se nota desde el primer día."
+    quote: "We went from sporadic leads to a constant flow of customers ready to buy. Raul's expertise is noticeable from day one."
   }
 ];
 
@@ -34,9 +34,9 @@ export default function SocialProof() {
     <section className="py-12 md:py-20 lg:py-24 bg-secondary/50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-primary">Confían en Mi Experiencia</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-primary">Trusted by Growing Businesses</h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Resultados reales para clientes que buscan crecer de forma inteligente.
+            Real results for clients who want to grow smarter, not harder.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

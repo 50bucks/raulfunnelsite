@@ -4,23 +4,23 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 const features = [
   {
     icon: <TrendingDown className="h-8 w-8 text-accent" />,
-    title: 'Altos Costos de Adquisición',
-    description: 'Reduzco tu Costo por Adquisición (CAC) con estrategias de pauta probadas y optimización constante para maximizar tu ROI.',
+    title: 'High Acquisition Costs',
+    description: 'I lower your Customer Acquisition Cost (CAC) with proven ad strategies and relentless optimization to maximize your ROI.',
   },
   {
     icon: <FilterX className="h-8 w-8 text-accent" />,
-    title: 'Leads de Baja Calidad',
-    description: 'Filtramos el ruido. Nos enfocamos en atraer prospectos realmente interesados en tu producto, listos para la conversión.',
+    title: 'Low-Quality Leads',
+    description: "We filter out the noise, focusing on attracting prospects genuinely interested in your product and ready to convert.",
   },
   {
     icon: <BrainCircuit className="h-8 w-8 text-accent" />,
-    title: 'Agencias sin Experiencia',
-    description: 'Años de experiencia como Media Buyer enfocados 100% en performance. Tu inversión está en manos de un experto.',
+    title: 'Inexperienced Agencies',
+    description: 'Years of experience as a Media Buyer focused 100% on performance. Your investment is in expert hands.',
   },
   {
     icon: <FileText className="h-8 w-8 text-accent" />,
-    title: 'Poca Transparencia',
-    description: 'Transparencia total en la inversión. Sabrás exactamente a dónde va cada centavo de tu presupuesto, con reportes claros y directos.',
+    title: 'Lack of Transparency',
+    description: 'Full transparency on your investment. You will know exactly where every dollar of your budget goes, with clear and direct reports.',
   },
 ];
 
@@ -29,9 +29,9 @@ export default function Features() {
     <section className="py-12 md:py-20 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-primary">¿Tu Inversión en Marketing no da Resultados?</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-primary">Is Your Marketing Investment Falling Short?</h2>
           <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
-            Como Media Buyer especialista, resuelvo los problemas que frenan tu crecimiento.
+            As a specialist Media Buyer, I solve the exact problems that are holding back your growth.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

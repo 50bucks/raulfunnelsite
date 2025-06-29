@@ -15,20 +15,20 @@ import { ArrowRight, ArrowLeft, Loader2 } from 'lucide-react';
 
 const challengeOptions = {
   'lead-generation': {
-    label: 'Generación de Leads',
-    placeholder: 'Ej: Generar 50 nuevos leads cualificados al mes.',
+    label: 'Lead Generation',
+    placeholder: 'e.g., Generate 50 new qualified leads per month.',
   },
   'brand-awareness': {
-    label: 'Notoriedad de Marca',
-    placeholder: 'Ej: Aumentar el tráfico web en un 30% el próximo trimestre.',
+    label: 'Brand Awareness',
+    placeholder: 'e.g., Increase web traffic by 30% next quarter.',
   },
   'sales-conversion': {
-    label: 'Conversión de Ventas',
-    placeholder: 'Ej: Mejorar la tasa de conversión de nuestro embudo en un 15%.',
+    label: 'Sales Conversion',
+    placeholder: 'e.g., Improve our funnel conversion rate by 15%.',
   },
   other: {
-    label: 'Otro',
-    placeholder: 'Ej: Lanzar un nuevo producto y ganar cuota de mercado.',
+    label: 'Other',
+    placeholder: 'e.g., Launch a new product and gain market share.',
   },
 };
 
@@ -97,8 +97,8 @@ export function FunnelForm({ onSubmit, isLoading }: FunnelFormProps) {
       <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-8">
         <div className="space-y-4">
           <div className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-primary">Optimiza tu Inversión y Atrae Clientes de Calidad</h1>
-            <p className="text-muted-foreground mt-2 max-w-xl mx-auto">Descubre cómo mi experiencia como Media Buyer puede reducir tus costos de adquisición y multiplicar tus leads de alto valor.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-primary">Stop Wasting Ad Spend. Start Attracting Quality Customers.</h1>
+            <p className="text-muted-foreground mt-2 max-w-xl mx-auto">Discover how my Media Buyer expertise can slash your acquisition costs and multiply your high-value leads.</p>
           </div>
           <Progress value={(currentStep / totalSteps) * 100} className="w-full" />
         </div>
@@ -107,24 +107,24 @@ export function FunnelForm({ onSubmit, isLoading }: FunnelFormProps) {
           <CarouselContent>
             <CarouselItem>
               <div className="space-y-4 p-1">
-                <FormField name="name" control={form.control} render={({ field }) => ( <FormItem><FormLabel>Nombre Completo</FormLabel><FormControl><Input placeholder="Juan Pérez" {...field} /></FormControl><FormMessage /></FormItem> )} />
-                <FormField name="email" control={form.control} render={({ field }) => ( <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="juan.perez@ejemplo.com" {...field} /></FormControl><FormMessage /></FormItem> )} />
-                <FormField name="companyName" control={form.control} render={({ field }) => ( <FormItem><FormLabel>Nombre de la Empresa</FormLabel><FormControl><Input placeholder="Innovate Inc." {...field} /></FormControl><FormMessage /></FormItem> )} />
+                <FormField name="name" control={form.control} render={({ field }) => ( <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="John Doe" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                <FormField name="email" control={form.control} render={({ field }) => ( <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="john.doe@example.com" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                <FormField name="companyName" control={form.control} render={({ field }) => ( <FormItem><FormLabel>Company Name</FormLabel><FormControl><Input placeholder="Innovate Inc." {...field} /></FormControl><FormMessage /></FormItem> )} />
               </div>
             </CarouselItem>
             <CarouselItem>
               <div className="space-y-4 p-1">
-                <FormField name="challenge" control={form.control} render={({ field }) => ( <FormItem className="space-y-3"> <FormLabel>¿Cuál es tu mayor reto de marketing?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">{Object.entries(challengeOptions).map(([key, { label }]) => (<FormItem key={key} className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-secondary/50 transition-colors"><FormControl><RadioGroupItem value={key as keyof typeof challengeOptions} /></FormControl><FormLabel className="font-normal">{label}</FormLabel></FormItem>))}</RadioGroup></FormControl><FormMessage /></FormItem> )} />
+                <FormField name="challenge" control={form.control} render={({ field }) => ( <FormItem className="space-y-3"> <FormLabel>What's your biggest marketing challenge?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">{Object.entries(challengeOptions).map(([key, { label }]) => (<FormItem key={key} className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-secondary/50 transition-colors"><FormControl><RadioGroupItem value={key as keyof typeof challengeOptions} /></FormControl><FormLabel className="font-normal">{label}</FormLabel></FormItem>))}</RadioGroup></FormControl><FormMessage /></FormItem> )} />
               </div>
             </CarouselItem>
             <CarouselItem>
-              <div className="p-1"><FormField name="businessDescription" control={form.control} render={({ field }) => (<FormItem><FormLabel>Describe tu negocio</FormLabel><FormControl><Textarea placeholder="Somos una empresa B2B SaaS que ofrece..." className="min-h-[120px]" {...field} /></FormControl><FormMessage /></FormItem>)} /></div>
+              <div className="p-1"><FormField name="businessDescription" control={form.control} render={({ field }) => (<FormItem><FormLabel>Describe your business</FormLabel><FormControl><Textarea placeholder="We are a B2B SaaS company that offers..." className="min-h-[120px]" {...field} /></FormControl><FormMessage /></FormItem>)} /></div>
             </CarouselItem>
             <CarouselItem>
-              <div className="p-1"><FormField name="marketingEfforts" control={form.control} render={({ field }) => ( <FormItem><FormLabel>¿Cuáles son tus esfuerzos de marketing actuales?</FormLabel><FormControl><Textarea placeholder="Actualmente usamos Google Ads y publicamos en LinkedIn..." className="min-h-[120px]" {...field} /></FormControl><FormMessage /></FormItem>)} /></div>
+              <div className="p-1"><FormField name="marketingEfforts" control={form.control} render={({ field }) => ( <FormItem><FormLabel>What are your current marketing efforts?</FormLabel><FormControl><Textarea placeholder="We currently use Google Ads and post on LinkedIn..." className="min-h-[120px]" {...field} /></FormControl><FormMessage /></FormItem>)} /></div>
             </CarouselItem>
             <CarouselItem>
-              <div className="p-1"><FormField name="marketingGoals" control={form.control} render={({ field }) => (<FormItem><FormLabel>¿Cuáles son tus objetivos de marketing?</FormLabel><FormControl><Textarea placeholder={goalsPlaceholder} className="min-h-[120px]" {...field} /></FormControl><FormMessage /></FormItem>)} /></div>
+              <div className="p-1"><FormField name="marketingGoals" control={form.control} render={({ field }) => (<FormItem><FormLabel>What are your marketing goals?</FormLabel><FormControl><Textarea placeholder={goalsPlaceholder} className="min-h-[120px]" {...field} /></FormControl><FormMessage /></FormItem>)} /></div>
             </CarouselItem>
           </CarouselContent>
         </Carousel>
@@ -132,17 +132,17 @@ export function FunnelForm({ onSubmit, isLoading }: FunnelFormProps) {
         <div className="flex items-center justify-between pt-4">
           <Button type="button" variant="outline" onClick={handlePrev} disabled={currentStep === 1}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Atrás
+            Back
           </Button>
           {currentStep < totalSteps ? (
             <Button type="button" onClick={handleNext}>
-              Siguiente
+              Next
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           ) : (
             <Button type="submit" disabled={isSubmitting || isLoading}>
               {isSubmitting || isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              Obtener mi Análisis
+              Get My Analysis
             </Button>
           )}
         </div>

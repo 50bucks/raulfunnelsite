@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Raul Funnel Site',
+  title: 'Raúl Rodrigues | Media Buyer',
   description: 'AI-driven diagnostic tool to assess marketing maturity and provide tailored solutions.',
   icons: {
     icon: '/favicon.ico',
