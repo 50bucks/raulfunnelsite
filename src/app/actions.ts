@@ -37,6 +37,14 @@ export async function submitFunnelForm(data: FunnelFormValues) {
     
     console.log('New lead captured:', { name: parsedData.data.name, email: parsedData.data.email, company: parsedData.data.companyName });
 
+    const callToAction = "\n\nBy partnering with a media buyer specialist like Raul, you can implement these strategies effectively and achieve your expected results.";
+
+    const finalResult = {
+      ...result,
+      suggestedSolutions: `${result.suggestedSolutions}${callToAction}`,
+      suggestedTactics: `${result.suggestedTactics}${callToAction}`,
+    };
+
     // Send email using EmailJS REST API
     const emailjsData = {
       service_id: process.env.EMAILJS_SERVICE_ID,
@@ -52,9 +60,9 @@ export async function submitFunnelForm(data: FunnelFormValues) {
         business_description: parsedData.data.businessDescription,
         marketing_efforts: parsedData.data.marketingEfforts,
         marketing_goals: parsedData.data.marketingGoals,
-        maturity_level: result.maturityLevel,
-        suggested_solutions: result.suggestedSolutions,
-        suggested_tactics: result.suggestedTactics,
+        maturity_level: finalResult.maturityLevel,
+        suggested_solutions: finalResult.suggestedSolutions,
+        suggested_tactics: finalResult.suggestedTactics,
       },
     };
     
@@ -75,7 +83,7 @@ export async function submitFunnelForm(data: FunnelFormValues) {
         console.error('Error sending email via EmailJS:', error);
     });
 
-    return { success: true, data: result };
+    return { success: true, data: finalResult };
   } catch (error) {
     console.error('Error calling AI flow:', error);
     return { success: false, error: 'An unexpected error occurred while analyzing your data. Please try again later.' };
