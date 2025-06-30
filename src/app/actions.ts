@@ -6,6 +6,7 @@ import {
   AnalyzeMarketingMaturityOutput,
 } from '@/ai/flows/analyze-marketing-maturity';
 import { FunnelFormValues, funnelFormSchema } from '@/lib/schema';
+import { Resend } from 'resend';
 
 export type SubmissionResult = {
   success: boolean;
@@ -13,6 +14,8 @@ export type SubmissionResult = {
   data?: AnalyzeMarketingMaturityOutput;
   error?: string;
 };
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function submitFunnelForm(data: FunnelFormValues): Promise<SubmissionResult> {
   const parsedData = funnelFormSchema.safeParse(data);
@@ -24,7 +27,16 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
     return { success: false, contactWillBeMade: false, error: firstError };
   }
 
-  const { businessDescription, marketingEfforts, marketingGoals, challenge, monthlyBudget } = parsedData.data;
+  const {
+    name,
+    email,
+    companyName,
+    businessDescription,
+    marketingEfforts,
+    marketingGoals,
+    challenge,
+    monthlyBudget,
+  } = parsedData.data;
 
   if (monthlyBudget === '<1500') {
     return {
@@ -32,17 +44,32 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
       contactWillBeMade: false,
       data: {
         maturityLevel: 'Basic Analysis',
-        suggestedSolutions: 'To unlock advanced strategies and maximize your return on investment, a larger budget is recommended. Contact Raul to get your personalized results.',
-        suggestedTactics: 'Personalized tactical recommendations are available for partners ready to invest in significant growth. Contact Raul to get your personalized results.',
+        suggestedSolutions:
+          'To unlock advanced strategies and maximize your return on investment, a larger budget is recommended. Contact Raul to get your personalized results.',
+        suggestedTactics:
+          'Personalized tactical recommendations are available for partners ready to invest in significant growth. Contact Raul to get your personalized results.',
       },
     };
   }
-  
-  const { GOOGLE_API_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY, EMAILJS_PRIVATE_KEY } = process.env;
+
+  const { GOOGLE_API_KEY, RESEND_API_KEY, TO_EMAIL } = process.env;
 
   if (!GOOGLE_API_KEY) {
     console.error('Google API Key is not configured. AI analysis cannot proceed.');
-    return { success: false, contactWillBeMade: false, error: 'The analysis service is temporarily unavailable. Please try again later.' };
+    return {
+      success: false,
+      contactWillBeMade: false,
+      error: 'The analysis service is temporarily unavailable. Please try again later.',
+    };
+  }
+
+  if (!RESEND_API_KEY || !TO_EMAIL) {
+    console.error('Resend API Key or To Email is not configured. Email notifications are disabled.');
+    return {
+      success: false,
+      contactWillBeMade: false,
+      error: 'The notification service is temporarily unavailable. Please try again later.',
+    };
   }
 
   const aiInput: AnalyzeMarketingMaturityInput = {
@@ -55,12 +82,6 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
   try {
     const result = await analyzeMarketingMaturity(aiInput);
 
-    console.log('New lead captured:', {
-      name: parsedData.data.name,
-      email: parsedData.data.email,
-      company: parsedData.data.companyName,
-    });
-
     const callToAction =
       '\n\nBy partnering with a media buyer specialist like Raul, you can implement these strategies effectively and achieve your expected results.';
 
@@ -70,60 +91,57 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
       suggestedTactics: `${result.suggestedTactics}${callToAction}`,
     };
 
-    // Send email but don't let it block the response to the user
     (async () => {
       try {
-        console.log('Attempting to send email via EmailJS...');
-        console.log('Service ID present:', !!EMAILJS_SERVICE_ID);
-        console.log('Template ID present:', !!EMAILJS_TEMPLATE_ID);
-        console.log('Public Key present:', !!EMAILJS_PUBLIC_KEY);
-        console.log('Private Key present:', !!EMAILJS_PRIVATE_KEY);
+        console.log('Attempting to send email via Resend...');
+        
+        const emailHtml = `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+              <h2 style="color: #2d3e50;">New Marketing Analysis Lead!</h2>
+              <p>A new potential client has completed the marketing analysis form. Here are their details:</p>
+              
+              <h3 style="color: #2d3e50;">Contact Info</h3>
+              <ul>
+                <li><strong>Name:</strong> ${name}</li>
+                <li><strong>Email:</strong> ${email}</li>
+                <li><strong>Company:</strong> ${companyName}</li>
+              </ul>
+              
+              <h3 style="color: #2d3e50;">Client's Submission</h3>
+              <ul>
+                <li><strong>Biggest Challenge:</strong> ${challenge}</li>
+                <li><strong>Monthly Budget:</strong> ${monthlyBudget}</li>
+                <li><strong>Business Description:</strong> ${businessDescription}</li>
+                <li><strong>Current Marketing Efforts:</strong> ${marketingEfforts}</li>
+                <li><strong>Marketing Goals:</strong> ${marketingGoals}</li>
+              </ul>
+              
+              <h3 style="color: #2d3e50;">AI-Generated Analysis</h3>
+              <ul>
+                <li><strong>Maturity Level:</strong> ${finalResult.maturityLevel}</li>
+                <li><strong>Suggested Solutions:</strong><br/>${finalResult.suggestedSolutions.replace(/\n/g, '<br>')}</li>
+                <li><strong>Suggested Tactics:</strong><br/>${finalResult.suggestedTactics.replace(/\n/g, '<br>')}</li>
+              </ul>
+              
+              <p style="margin-top: 20px;">Follow up with this lead soon!</p>
+          </div>
+        `;
 
-        if (!(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY && EMAILJS_PRIVATE_KEY)) {
-          console.error('One or more EmailJS environment variables are missing. Email cannot be sent.');
+        const { data, error } = await resend.emails.send({
+          from: 'Raul Funnel Site <onboarding@resend.dev>',
+          to: [TO_EMAIL],
+          subject: `New Lead: ${name} from ${companyName}`,
+          html: emailHtml,
+        });
+
+        if (error) {
+          console.error('Failed to send email via Resend:', error);
           return;
         }
 
-        const emailjsData = {
-          service_id: EMAILJS_SERVICE_ID,
-          template_id: EMAILJS_TEMPLATE_ID,
-          user_id: EMAILJS_PUBLIC_KEY,
-          accessToken: EMAILJS_PRIVATE_KEY,
-          template_params: {
-            name: parsedData.data.name,
-            email: parsedData.data.email,
-            company_name: parsedData.data.companyName,
-            challenge: parsedData.data.challenge,
-            monthly_budget: parsedData.data.monthlyBudget,
-            business_description: parsedData.data.businessDescription,
-            marketing_efforts: parsedData.data.marketingEfforts,
-            marketing_goals: parsedData.data.marketingGoals,
-            maturity_level: finalResult.maturityLevel,
-            suggested_solutions: finalResult.suggestedSolutions,
-            suggested_tactics: finalResult.suggestedTactics,
-          },
-        };
-
-        const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(emailjsData),
-        });
-
-        const responseStatus = response.status;
-        const responseText = await response.text();
-        
-        console.log('EmailJS API Response Status:', responseStatus);
-        console.log('EmailJS API Response Body:', responseText);
-
-        if (response.ok) {
-          console.log('Email sent successfully via EmailJS.');
-        } else {
-          console.error('Failed to send email via EmailJS.');
-        }
-
+        console.log('Email sent successfully via Resend. ID:', data?.id);
       } catch (emailError) {
-        console.error('Caught an error while trying to send email via EmailJS:', emailError);
+        console.error('Caught an error while trying to send email via Resend:', emailError);
       }
     })();
 
