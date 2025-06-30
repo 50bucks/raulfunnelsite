@@ -78,7 +78,7 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
             service_id: EMAILJS_SERVICE_ID,
             template_id: EMAILJS_TEMPLATE_ID,
             user_id: EMAILJS_PUBLIC_KEY,
-            private_key: EMAILJS_PRIVATE_KEY, // Corrected from accessToken
+            accessToken: EMAILJS_PRIVATE_KEY, // This was the critical fix. The key must be 'accessToken'.
             template_params: {
               name: parsedData.data.name,
               email: parsedData.data.email,
@@ -100,11 +100,11 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
             body: JSON.stringify(emailjsData),
           });
 
+          const responseText = await response.text();
           if (response.ok) {
-            console.log('Email sent successfully via EmailJS');
+            console.log('Email sent successfully via EmailJS. Response:', responseText);
           } else {
-            const text = await response.text();
-            console.error('Failed to send email via EmailJS. Status:', response.status, 'Body:', text);
+            console.error('Failed to send email via EmailJS. Status:', response.status, 'Body:', responseText);
           }
         } else {
           console.error('EmailJS environment variables are not fully configured. Email not sent.');

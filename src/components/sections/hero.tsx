@@ -9,11 +9,21 @@ import { AnalysisResult } from '@/components/analysis-result';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '../ui/skeleton';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 export default function Hero() {
   const [analysis, setAnalysis] = useState<AnalyzeMarketingMaturityOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showContactDialog, setShowContactDialog] = useState(false);
   const { toast } = useToast();
 
   const handleFormSubmit = async (data: FunnelFormValues) => {
@@ -24,9 +34,7 @@ export default function Hero() {
     if (result.success) {
       setAnalysis(result.data!);
       if (result.contactWillBeMade) {
-        toast({
-          title: 'Raul will contact you soon',
-        });
+        setShowContactDialog(true);
       }
     } else {
       const errorMessage = result.error || 'There was an issue with your submission. Please check your inputs and try again.';
@@ -71,6 +79,19 @@ export default function Hero() {
           </Card>
         </div>
       </div>
+      <Dialog open={showContactDialog} onOpenChange={setShowContactDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Raul will contact you soon</DialogTitle>
+            <DialogDescription>
+              Your analysis is ready. A qualified expert will be in touch shortly to discuss your results.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={() => setShowContactDialog(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
