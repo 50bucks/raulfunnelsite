@@ -15,8 +15,6 @@ export type SubmissionResult = {
   error?: string;
 };
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function submitFunnelForm(data: FunnelFormValues): Promise<SubmissionResult> {
   const parsedData = funnelFormSchema.safeParse(data);
 
@@ -93,6 +91,7 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
 
     (async () => {
       try {
+        const resend = new Resend(RESEND_API_KEY);
         console.log('Attempting to send email via Resend...');
         
         const emailHtml = `
