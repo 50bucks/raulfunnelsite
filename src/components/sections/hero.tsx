@@ -25,8 +25,7 @@ export default function Hero() {
       setAnalysis(result.data!);
       if (result.contactWillBeMade) {
         toast({
-          title: 'Analysis Complete!',
-          description: 'Raul will contact you soon.',
+          title: 'Raul will contact you soon',
         });
       }
     } else {

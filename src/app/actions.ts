@@ -27,16 +27,13 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
   const { businessDescription, marketingEfforts, marketingGoals, challenge, monthlyBudget } = parsedData.data;
 
   if (monthlyBudget === '<1500') {
-    console.log('Low-budget submission received, not processing as a lead:', { email: parsedData.data.email });
     return {
       success: true,
       contactWillBeMade: false,
       data: {
         maturityLevel: 'Basic Analysis',
-        suggestedSolutions:
-          'To unlock advanced strategies and maximize your return on investment, a larger budget is recommended. Contact Raul to get your results.',
-        suggestedTactics:
-          'Personalized tactical recommendations are available for partners ready to invest in significant growth. Contact Raul to get your results.',
+        suggestedSolutions: 'To unlock advanced strategies and maximize your return on investment, a larger budget is recommended. Contact Raul to get your personalized results.',
+        suggestedTactics: 'Personalized tactical recommendations are available for partners ready to invest in significant growth. Contact Raul to get your personalized results.',
       },
     };
   }
@@ -81,7 +78,7 @@ export async function submitFunnelForm(data: FunnelFormValues): Promise<Submissi
             service_id: EMAILJS_SERVICE_ID,
             template_id: EMAILJS_TEMPLATE_ID,
             user_id: EMAILJS_PUBLIC_KEY,
-            accessToken: EMAILJS_PRIVATE_KEY,
+            private_key: EMAILJS_PRIVATE_KEY, // Corrected from accessToken
             template_params: {
               name: parsedData.data.name,
               email: parsedData.data.email,
