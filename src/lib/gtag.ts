@@ -1,17 +1,20 @@
-// This declaration is needed because the gtag function is added to the window object by the Google script.
+// This declaration is needed because the gtag function and custom conversion functions
+// are added to the window object by the Google scripts.
 declare global {
   interface Window {
     gtag: (type: 'event', eventName: string, eventParams?: object) => void;
+    gtag_report_conversion: (url?: string) => void;
   }
 }
 
 /**
- * Fires a 'generate_lead' event for Google Ads.
+ * Fires a conversion event for Google Ads when a lead form is submitted.
  * This should be called when a user successfully completes a lead form.
- * This is a standard event that can be tracked as a conversion in your Google Ads account.
  */
-export const reportGtagLead = () => {
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'generate_lead');
+export const reportGtagConversion = () => {
+  if (typeof window.gtag_report_conversion === 'function') {
+    window.gtag_report_conversion();
+  } else {
+    console.warn('gtag_report_conversion function not found on window object.');
   }
 };

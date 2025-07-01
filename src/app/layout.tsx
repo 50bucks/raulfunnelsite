@@ -40,6 +40,29 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Event snippet for lead form submission */}
+        <Script
+          id="gtag-report-conversion"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function gtag_report_conversion(url) {
+                var callback = function () {
+                  if (typeof(url) != 'undefined') {
+                    window.location = url;
+                  }
+                };
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17289507676/n92sCOjS5ecaENzmo7RA',
+                    'value': 1.0,
+                    'currency': 'MXN',
+                    'event_callback': callback
+                });
+                return false;
+              }
+            `,
+          }}
+        />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
         {children}

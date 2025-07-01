@@ -18,7 +18,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { reportGtagLead } from '@/lib/gtag';
+import { reportGtagConversion } from '@/lib/gtag';
 
 export default function Hero() {
   const [analysis, setAnalysis] = useState<AnalyzeMarketingMaturityOutput | null>(null);
@@ -35,7 +35,7 @@ export default function Hero() {
     if (result.success) {
       setAnalysis(result.data!);
       if (result.contactWillBeMade) {
-        reportGtagLead();
+        reportGtagConversion();
         setShowContactDialog(true);
       }
     } else {
