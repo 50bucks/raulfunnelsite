@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Star } from "lucide-react";
 
@@ -6,25 +5,16 @@ const testimonials = [
   {
     name: "Anne Smith",
     title: "Marketing Director, Tech Solutions",
-    avatar: "AS",
-    image: "https://placehold.co/100x100.png",
-    dataAiHint: "woman portrait professional",
     quote: "Thanks to Raul's paid advertising services, I improved my customer acquisition method, getting high-quality clients at a low cost."
   },
   {
     name: "Charles Peterson",
     title: "CEO, InnovaTech",
-    avatar: "CP",
-    image: "https://placehold.co/100x100.png",
-    dataAiHint: "man portrait professional",
     quote: "We were lost with our campaigns. Raul not only optimized our budget but also provided a level of transparency no other agency had ever given us."
   },
   {
     name: "Sophia Miller",
     title: "Founder, Creative Commerce",
-    avatar: "SM",
-    image: "https://placehold.co/100x100.png",
-    dataAiHint: "woman portrait creative",
     quote: "We went from sporadic leads to a constant flow of customers ready to buy. Raul's expertise is noticeable from day one."
   }
 ];
@@ -44,10 +34,6 @@ export default function SocialProof() {
             <Card key={index} className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card/80 backdrop-blur-sm">
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src={testimonial.image} alt={testimonial.name} data-ai-hint={testimonial.dataAiHint} />
-                    <AvatarFallback>{testimonial.avatar}</AvatarFallback>
-                  </Avatar>
                   <div>
                     <p className="font-semibold text-foreground">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.title}</p>
