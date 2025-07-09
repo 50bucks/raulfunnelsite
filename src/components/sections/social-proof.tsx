@@ -33,11 +33,9 @@ export default function SocialProof() {
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card/80 backdrop-blur-sm">
               <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div>
-                    <p className="font-semibold text-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                  </div>
+                <div>
+                  <p className="font-semibold text-foreground">{testimonial.name}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.title}</p>
                 </div>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col justify-between">
