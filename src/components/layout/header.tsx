@@ -12,7 +12,7 @@ export default function Header() {
             height={40}
             className="h-10 w-10"
           />
-          <div className="bg-card/80 backdrop-blur-sm rounded-md px-3 py-1">
+          <div className="bg-card/50 backdrop-blur-sm rounded-md px-1 py-0">
             <span className="text-xl font-semibold text-foreground">Raúl Rodrigues Media Buyer</span>
           </div>
         </div>
