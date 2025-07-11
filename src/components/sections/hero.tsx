@@ -60,7 +60,7 @@ export default function Hero() {
     <section className="py-12 md:py-20 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl">
-          <Card className="overflow-hidden shadow-2xl shadow-primary/10">
+          <Card className="overflow-hidden shadow-2xl shadow-primary/10 bg-card/80 backdrop-blur-sm">
             <CardContent className="p-4 sm:p-8">
               {isLoading ? (
                 <div className="space-y-6">
