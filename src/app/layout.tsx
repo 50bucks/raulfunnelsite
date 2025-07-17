@@ -23,7 +23,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></link>
         
-        {/* Google tag (gtag.js) */}
+        {/* Google Ads Tag */}
         <Script
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=AW-17289507676"
@@ -40,6 +40,25 @@ export default function RootLayout({
             `,
           }}
         />
+
+        {/* Google Analytics Tag */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-P8DMVP5ZM9"
+        />
+        <Script
+          id="gtag-analytics-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-P8DMVP5ZM9');
+            `,
+          }}
+        />
+
         {/* Event snippet for lead form submission */}
         <Script
           id="gtag-report-conversion"
@@ -66,6 +85,12 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
         {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+
         <Toaster />
       </body>
     </html>
