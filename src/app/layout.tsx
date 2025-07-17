@@ -90,9 +90,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-        <Toaster />
-      </body>
-    </html>
-  );
-}
